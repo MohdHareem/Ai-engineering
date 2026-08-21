@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Harry AI — Mohd Hareem's AI Interview Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #100f17;
+    --ink-soft: #1a1926;
+    --ink-soft-2: #221f33;
+    --panel: #15131f;
+    --paper: #f6f4ef;
+    --gold: #d4af5f;
+    --gold-dim: #a8853f;
+    --violet: #8b7cf6;
+    --line: #ffffff14;
+    --text-on-ink: #f6f4ef;
+    --text-muted: #918fa3;
+    --live: #e0654a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--ink);
+    color: var(--text-on-ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+  }
+
+  .app {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* ---------------- LEFT PROFILE PANEL ---------------- */
+  .profile-panel {
+    width: 300px;
+    flex-shrink: 0;
+    background:
+      radial-gradient(circle at 20% 0%, #2a234a70 0%, transparent 55%),
+      var(--panel);
+    border-right: 1px solid var(--line);
+    padding: 32px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .avatar-lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--violet) 130%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--ink);
+  }
+
+  .profile-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 14px 0 2px;
+    letter-spacing: -0.01em;
+  }
+
+  .profile-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border: 1px solid var(--line);
+    padding: 6px 11px;
+    border-radius: 100px;
+    width: fit-content;
+  }
+
+  .rec-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  .rec-badge.live .rec-dot {
+    background: var(--live);
+    box-shadow: 0 0 0 0 var(--live);
+    animation: pulse 1.4s infinite;
+  }
+
+  .rec-badge.live { color: var(--live); border-color: var(--live); }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(224,101,74,0.6); }
+    70% { box-shadow: 0 0 0 8px rgba(224,101,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(224,101,74,0); }
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .skill-tag {
+    font-size: 11.5px;
+    background: var(--ink-soft-2);
+    border: 1px solid var(--line);
+    color: var(--text-on-ink);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .profile-spacer { flex: 1; }
+
+  .resume-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--gold) 0%, #e0c17c 100%);
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    transition: transform 0.15s ease;
+  }
+
+  .resume-btn:hover { transform: translateY(-1px); }
+
+  .profile-links {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+  }
+
+  .profile-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    border-bottom: 1px solid transparent;
+  }
+  .profile-links a:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  /* ---------------- MOBILE TOP BAR (shown instead of sidebar) ---------------- */
+  .mobile-bar {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+
+  .avatar-sm {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--violet) 130%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+
+  .mobile-bar-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+  .mobile-bar-text .name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16px; }
+  .mobile-bar-text .tag { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+  .mobile-resume-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: var(--ink-soft-2);
+    border: 1px solid var(--line);
+    color: var(--text-on-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  /* ---------------- RIGHT CHAT PANEL ---------------- */
+  .chat-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-height: 100vh;
+    max-height: 100dvh;
+  }
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px clamp(20px, 4vw, 40px) 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .chat-header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .chat-header .sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 3px;
+  }
+
+  .transcript {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px clamp(16px, 4vw, 40px);
+  }
+
+  .empty-state {
+    margin: auto;
+    text-align: center;
+    max-width: 460px;
+    padding: 0 8px;
+  }
+
+  .empty-state .headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(19px, 4vw, 24px);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .empty-state .headline span { color: var(--gold); }
+
+  .empty-state p {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0 0 22px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .chip {
+    background: var(--ink-soft-2);
+    border: 1px solid var(--line);
+    color: var(--text-on-ink);
+    padding: 9px 14px;
+    border-radius: 100px;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chip:hover {
+    transform: translateY(-1px);
+    border-color: var(--gold-dim);
+    background: var(--ink-soft);
+  }
+
+  .row { display: flex; gap: 12px; }
+  .row.hr { justify-content: flex-start; }
+  .row.candidate { justify-content: flex-end; }
+
+  .bubble {
+    max-width: 82%;
+    padding: 12px 15px;
+    border-radius: 4px;
+    line-height: 1.55;
+    font-size: clamp(14px, 3.2vw, 15px);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+
+  .row.hr .bubble {
+    background: var(--ink-soft);
+    border-left: 2px solid var(--gold);
+    border-radius: 4px 10px 10px 4px;
+  }
+
+  .row.candidate .bubble {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 10px 4px 4px 10px;
+  }
+
+  .row.candidate .label { color: var(--gold-dim); }
+
+  .composer {
+    border-top: 1px solid var(--line);
+    padding: 16px clamp(16px, 4vw, 40px) calc(env(safe-area-inset-bottom, 0px) + 16px);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .composer input {
+    flex: 1;
+    min-width: 0;
+    background: var(--ink-soft);
+    border: 1px solid var(--line);
+    color: var(--text-on-ink);
+    padding: 13px 15px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .composer input:focus { border-color: var(--gold-dim); }
+  .composer input::placeholder { color: var(--text-muted); }
+
+  .icon-btn, .send-btn {
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .icon-btn {
+    width: 46px;
+    height: 46px;
+    background: var(--ink-soft);
+    border: 1px solid var(--line);
+    color: var(--text-on-ink);
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+
+  .icon-btn.listening {
+    background: var(--live);
+    border-color: var(--live);
+    animation: pulse 1.4s infinite;
+  }
+
+  .icon-btn:hover, .send-btn:hover { transform: translateY(-1px); }
+
+  .send-btn {
+    background: linear-gradient(135deg, var(--gold) 0%, #e0c17c 100%);
+    color: var(--ink);
+    height: 46px;
+    padding: 0 clamp(14px, 4vw, 22px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: var(--ink-soft); border-radius: 3px; }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width: 860px) {
+    .profile-panel { display: none; }
+    .mobile-bar { display: flex; }
+    .app { flex-direction: column; }
+    .chat-header { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .bubble { max-width: 90%; }
+    .chips { gap: 6px; }
+    .chip { font-size: 11.5px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Desktop sidebar -->
+  <aside class="profile-panel">
+    <div>
+      <div class="avatar-lg">H</div>
+      <div class="profile-name">Mohd Hareem</div>
+      <div class="profile-tagline">AI Engineer &amp; Full-Stack Developer, B.Tech CSE @ ABES Engineering College</div>
+    </div>
+
+    <div class="rec-badge" id="recBadge">
+      <div class="rec-dot"></div>
+      <span id="recLabel">Harry AI · Idle</span>
+    </div>
+
+    <div>
+      <div class="section-label">Core Stack</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">FastAPI</span>
+        <span class="skill-tag">React.js</span>
+        <span class="skill-tag">LLMs / Groq</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Prompt Engg.</span>
+      </div>
+    </div>
+
+    <div class="profile-spacer"></div>
+
+    <a class="resume-btn" href="http://127.0.0.1:8000/resume" download>⬇ Download Resume</a>
+    <div class="profile-links">
+      <a href="https://www.linkedin.com/in/md-hareem-451262369" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/MohdHareem" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </aside>
+
+  <!-- Mobile top bar -->
+  <div class="mobile-bar">
+    <div class="avatar-sm">H</div>
+    <div class="mobile-bar-text">
+      <div class="name">Harry AI</div>
+      <div class="tag">Mohd Hareem's AI Desk</div>
+    </div>
+    <a class="mobile-resume-btn" href="http://127.0.0.1:8000/resume" download title="Download Resume">⬇</a>
+  </div>
+
+  <!-- Chat -->
+  <main class="chat-panel">
+    <div class="chat-header">
+      <div>
+        <h1>Harry AI</h1>
+        <div class="sub">Mohd Hareem's AI Interview Desk</div>
+      </div>
+    </div>
+
+    <div class="transcript" id="transcript">
+      <div class="empty-state" id="emptyState">
+        <div class="headline">Ask <span>Harry</span> anything</div>
+        <p>I answer from Hareem's real resume — and can chat generally too, just like a real interview.</p>
+        <div class="chips" id="chips">
+          <div class="chip" data-q="Tell me about yourself">Tell me about yourself</div>
+          <div class="chip" data-q="What are your key technical skills?">Key technical skills</div>
+          <div class="chip" data-q="Walk me through your AI resume parser project">Your AI resume parser project</div>
+          <div class="chip" data-q="Are you a good fit for an AI Engineer role?">Fit for AI Engineer role?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer">
+      <button class="icon-btn" id="micBtn" title="Tap to speak, tap again to stop">🎤</button>
+      <input id="textInput" type="text" placeholder="Type your question…" />
+      <button class="send-btn" id="sendBtn">Ask</button>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  const API_URL = "http://127.0.0.1:8000/chat";
+
+  const transcript = document.getElementById("transcript");
+  const emptyState = document.getElementById("emptyState");
+  const textInput = document.getElementById("textInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const micBtn = document.getElementById("micBtn");
+  const recBadge = document.getElementById("recBadge");
+  const recLabel = document.getElementById("recLabel");
+  const chips = document.getElementById("chips");
+
+  let voicesReady = [];
+  window.speechSynthesis.onvoiceschanged = () => {
+    voicesReady = window.speechSynthesis.getVoices();
+  };
+
+  function setStatus(state) {
+    recBadge.classList.remove("live");
+    if (state === "idle") recLabel.textContent = "Harry AI · Idle";
+    if (state === "listening") { recLabel.textContent = "Listening"; recBadge.classList.add("live"); }
+    if (state === "thinking") { recLabel.textContent = "Thinking"; recBadge.classList.add("live"); }
+    if (state === "speaking") { recLabel.textContent = "Speaking"; recBadge.classList.add("live"); }
+  }
+
+  function addBubble(role, text) {
+    if (emptyState) emptyState.style.display = "none";
+    const row = document.createElement("div");
+    row.className = `row ${role === "user" ? "candidate" : "hr"}`;
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    const label = document.createElement("span");
+    label.className = "label";
+    label.textContent = role === "user" ? "HR — you" : "Harry AI";
+    bubble.appendChild(label);
+    const body = document.createElement("div");
+    body.textContent = text;
+    bubble.appendChild(body);
+    row.appendChild(bubble);
+    transcript.appendChild(row);
+    transcript.scrollTop = transcript.scrollHeight;
+    return body;
+  }
+
+  chips.addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    askQuestion(chip.dataset.q);
+  });
+
+  let pendingUtterances = 0;
+
+  function speakChunk(text) {
+    if (!("speechSynthesis" in window) || !text.trim()) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    const preferred = voicesReady.find(v => /en-IN|en-GB|en-US/i.test(v.lang));
+    if (preferred) utterance.voice = preferred;
+    utterance.rate = 1;
+    pendingUtterances++;
+    utterance.onstart = () => setStatus("speaking");
+    utterance.onend = () => {
+      pendingUtterances--;
+      if (pendingUtterances <= 0) setStatus("idle");
+    };
+    window.speechSynthesis.speak(utterance);
+  }
+
+  async function askQuestion(question) {
+    if (!question || !question.trim()) return;
+    window.speechSynthesis.cancel();
+    pendingUtterances = 0;
+    addBubble("user", question);
+    setStatus("thinking");
+    sendBtn.disabled = true;
+
+    const aiBody = addBubble("ai", "");
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      });
+
+      if (!res.ok) throw new Error(`Server returned ${res.status}`);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let fullText = "";
+      let speechBuffer = "";
+      const sentenceRegex = /[^.!?]+[.!?]+(\s|$)/g;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunkText = decoder.decode(value, { stream: true });
+        fullText += chunkText;
+        speechBuffer += chunkText;
+        aiBody.textContent = fullText;
+        transcript.scrollTop = transcript.scrollHeight;
+
+        sentenceRegex.lastIndex = 0;
+        let match;
+        let lastIndex = 0;
+        while ((match = sentenceRegex.exec(speechBuffer)) !== null) {
+          speakChunk(match[0].trim());
+          lastIndex = sentenceRegex.lastIndex;
+        }
+        speechBuffer = speechBuffer.slice(lastIndex);
+      }
+
+      if (speechBuffer.trim()) speakChunk(speechBuffer.trim());
+      if (!fullText.trim()) {
+        fullText = "I don't have enough information to answer that.";
+        aiBody.textContent = fullText;
+      }
+    } catch (err) {
+      aiBody.textContent = `⚠ Could not reach the backend. Is uvicorn running on port 8000? (${err.message})`;
+      setStatus("idle");
+    } finally {
+      sendBtn.disabled = false;
+    }
+  }
+
+  sendBtn.addEventListener("click", () => {
+    const q = textInput.value;
+    textInput.value = "";
+    askQuestion(q);
+  });
+
+  textInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendBtn.click();
+  });
+
+  // --- Voice input (records audio, sends to backend Whisper) ---
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let recognizing = false;
+
+  async function startListening() {
+    if (recognizing) return;
+    window.speechSynthesis.cancel();
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+
+      mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        micBtn.classList.remove("listening");
+        setStatus("thinking");
+
+        const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+        const formData = new FormData();
+        formData.append("audio", audioBlob, "recording.webm");
+
+        try {
+          const res = await fetch("http://127.0.0.1:8000/transcribe", {
+            method: "POST",
+            body: formData,
+          });
+          if (!res.ok) throw new Error(`Server returned ${res.status}`);
+          const data = await res.json();
+          const text = (data.text || "").trim();
+          if (text) {
+            askQuestion(text);
+          } else {
+            setStatus("idle");
+            addBubble("ai", "Didn't catch that — try speaking again.");
+          }
+        } catch (err) {
+          setStatus("idle");
+          addBubble("ai", `⚠ Couldn't transcribe audio: ${err.message}`);
+        }
+        recognizing = false;
+      };
+
+      mediaRecorder.start();
+      recognizing = true;
+      micBtn.classList.add("listening");
+      setStatus("listening");
+
+      setTimeout(() => {
+        if (mediaRecorder && mediaRecorder.state === "recording") mediaRecorder.stop();
+      }, 8000);
+
+    } catch (err) {
+      setStatus("idle");
+      addBubble("ai", "Mic permission blocked or unavailable. Allow it in Chrome's site settings.");
+    }
+  }
+
+  function stopListening() {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+      mediaRecorder.stop();
+    }
+  }
+
+  micBtn.addEventListener("click", () => {
+    if (recognizing) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  });
+</script>
+</body>
+</html>
